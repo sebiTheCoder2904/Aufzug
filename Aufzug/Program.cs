@@ -23,17 +23,66 @@
             Console.WriteLine("");
         }
 
+        static int driveElevator(int fromFloor, int toFloor, int FloorTotal, int speed) 
+        {
+            int FloorDiff = toFloor+1 - fromFloor;
+            if (toFloor > FloorTotal)
+            {
+                Console.SetCursorPosition(2, 4);
+                Console.Write("Dieses Stockwerk giebt es nicht!");
+                Thread.Sleep(700);
+                Console.SetCursorPosition(2, 4);
+                Console.Write("                                ");
+                return fromFloor;
+            }
+            else
+            {
+                movePointer(fromFloor * 2 + 1, toFloor * 2 + 1, speed);
+                return toFloor;
+            }
+        }
+
+        static void movePointer(int from, int to, int Speed) 
+        {
+            int diff = to - from;
+            if (diff > 0)
+            {
+                for (int i = from; i != to + 1; i++) // Aufzug nach oben
+                {
+                    Console.SetCursorPosition(i - 1, 8);
+                    Console.Write("  ^");
+                    Thread.Sleep(Speed);
+                    
+
+                }
+            }
+            else if (diff < 0)
+            {
+                for (int i = from; i != to - 1; i--) // Aufzug nach unten
+                {
+                    Console.SetCursorPosition(i + 1, 8);
+                    Console.Write("^  ");
+                    Thread.Sleep(Speed);
+                }
+            }
+        }
+
         static void Main()
         {
-            int FloorNumber = 0;
-            int FloorTotal = 5;
-            int elevatorSpeed = 500;
+            int FloorTotal = 8;
+            int FloorNow = 1;
 
-            
-
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("lalalalala");
-            Console.ReadKey();
+            Console.SetCursorPosition(2, 7);
+            Console.Write("1 2 3 4 5 6 7 8 9");
+            while (true)
+            {
+                Console.SetCursorPosition(2, 3);
+                Console.Write("Strockwerk: __");
+                Console.SetCursorPosition(14, 3);
+                int FloorTo = int.Parse(Console.ReadLine());
+                FloorNow = driveElevator(FloorNow, FloorTo - 1, FloorTotal, 400);
+                Thread.Sleep(1000);
+            }
 
         }
     }
